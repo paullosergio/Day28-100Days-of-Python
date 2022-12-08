@@ -1,5 +1,7 @@
 from tkinter import *
 import math
+from notification import toast
+
 # ---------------------------- CONSTANTS ------------------------------- #
 PINK = "#e2979c"
 RED = "#e7305b"
@@ -25,6 +27,10 @@ def reset_time():
 
 # ---------------------------- TIMER MECHANISM ------------------------------- #
 
+def popup():
+    window.deiconify()
+    
+
 
 def start_time():
     global reps
@@ -36,12 +42,21 @@ def start_time():
     if reps % 8 == 0:
         count_douwn(long_break_sec)
         title.config(text="Break", fg=RED)
+        toast.msg = "Back to work!"
+        popup()
     elif reps % 2 == 0:
         count_douwn(short_break_sec)
         title.config(text="Break", fg=PINK)
+        toast.msg = "Back to work!"
+        popup()
     else:
         count_douwn(work_sec)
         title.config(text="Work", fg=GREEN)
+        toast.msg = "Take a 5 minutes break!"
+        if reps == 7:
+            toast.msg = "Take a long pause of 20 minutes break!"
+        popup()
+    
 
 # ---------------------------- COUNTDOWN MECHANISM ------------------------------- # 
 
@@ -52,12 +67,15 @@ def count_douwn(count):
     count_sec = count % 60
 
     if count_sec < 10:
-        count_sec = f"0{count_sec}"
+        count_sec = f"0{count_sec}"      
+
 
     canvas.itemconfig(timer_text, text=f"{count_min}:{count_sec}")
     if count > 0:
         global timer
         timer = window.after(1000, count_douwn, count - 1)
+        if count == 2:
+            toast.show()
     else:
         start_time()
         marks = ""
@@ -65,6 +83,7 @@ def count_douwn(count):
         for _ in range(work_sessions):
             marks += "✔"
         check_mark.config(text=marks)
+        
 
 # ---------------------------- UI SETUP ------------------------------- #
 
