@@ -1,6 +1,7 @@
 from tkinter import Tk, Label, Canvas, PhotoImage, Button
 import math
 from notification import toast
+import customtkinter
 
 # ---------------------------- CONSTANTS ------------------------------- #
 PINK = "#e2979c"
@@ -39,23 +40,25 @@ def start_time():
     short_break_sec = SHORT_BREAK_MIN * 60
     long_break_sec = LONG_BREAK_MIN * 60
 
-    if reps % 8 == 0:
-        count_douwn(long_break_sec)
-        title.config(text="Break", fg=RED)
-        toast.msg = "Back to work!"
-        popup()
-    elif reps % 2 == 0:
-        count_douwn(short_break_sec)
-        title.config(text="Break", fg=PINK)
-        toast.msg = "Back to work!"
-        popup()
-    else:
-        count_douwn(work_sec)
-        title.config(text="Work", fg=GREEN)
-        toast.msg = "Take a 5 minutes break!"
-        if reps == 7:
-            toast.msg = "Take a long pause of 20 minutes break!"
-        popup()
+    if reps >= 1:
+
+        if reps % 8 == 0:
+            count_douwn(long_break_sec)
+            title.config(text="Break", fg=RED)
+            toast.msg = "Back to work!"
+            popup()
+        elif reps % 2 == 0:
+            count_douwn(short_break_sec)
+            title.config(text="Break", fg=PINK)
+            toast.msg = "Back to work!"
+            popup()
+        else:
+            count_douwn(work_sec)
+            title.config(text="Work", fg=GREEN)
+            toast.msg = "Take a 5 minutes break!"
+            if reps == 7:
+                toast.msg = "Take a long pause of 20 minutes break!"
+            popup()
     
 
 # ---------------------------- COUNTDOWN MECHANISM ------------------------------- # 
@@ -105,11 +108,12 @@ canvas.create_image(100, 112, image=tomato_img)
 timer_text = canvas.create_text(100, 130, text="00:00", fill="white", font=("Orbitron", 25, "bold"))
 canvas.grid(column=1, row=1)
 
-start_button = Button(text="Start", highlightthickness=0, command=start_time)
+
+start_button = customtkinter.CTkButton(master=window, text="Start", command=start_time)
 start_button.grid(column=0, row=2)
 
-reset_button = Button(text="Reset", highlightthickness=0, command=reset_time)
-reset_button.grid(column=2, row=2)
 
+reset_button = customtkinter.CTkButton(master=window, text="Reset", command=reset_time)
+reset_button.grid(column=2, row=2)
 
 window.mainloop()
