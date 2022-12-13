@@ -1,4 +1,4 @@
-from tkinter import *
+from tkinter import Tk, Label, Canvas, PhotoImage, Button
 import math
 from notification import toast
 
@@ -8,7 +8,7 @@ RED = "#e7305b"
 GREEN = "#5F8D4E"
 YELLOW = "#150050"
 FONT_NAME = "Courier"
-WORK_MIN = 25
+WORK_MIN = 0.1
 SHORT_BREAK_MIN = 5
 LONG_BREAK_MIN = 20
 reps = 0
