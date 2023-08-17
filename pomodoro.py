@@ -46,7 +46,7 @@ def start_time():
 
         if reps % 8 == 0:
             count_douwn(long_break_sec)
-            title.config(text="Break", fg=RED)
+            title.config(text="Long Break", fg=RED)
             toast.msg = "Back to work!"
             popup()
         elif reps % 2 == 0:
